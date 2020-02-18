@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  XML schema -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://nure.ua/vasilchenko/Practice7"
+            xmlns:tns="http://nure.ua/vasilchenko/Practice7">
+
+    <!-- root element -->
+    <xsd:element name="Guns">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Gun" type="tns:Gun" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- basic building element -->
+    <xsd:complexType name="Gun">
+        <xsd:sequence>
+
+            <xsd:element name="Model" type="xsd:string"/>
+            <xsd:element name="Handy" type="tns:Handy"/>
+            <xsd:element name="Origin" type="xsd:string"/>
+            <xsd:element name="TTC" type="tns:TTC"/>
+            <xsd:element name="Material" type="xsd:string"/>
+
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- tactical and technical characteristics -->
+    <xsd:complexType name="TTC">
+        <xsd:sequence>
+
+            <xsd:element name="Distance" type="tns:Distance"/>
+            <xsd:element name="SightingRange" type="xsd:integer"/>
+            <xsd:element name="Clip" type="xsd:boolean"/>
+            <xsd:element name="Optics" type="xsd:boolean"/>
+
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Distance">
+        <xsd:choice>
+            <xsd:element name="short" type="tns:short"/>
+            <xsd:element name="middle" type="tns:middle"/>
+            <xsd:element name="long" type="tns:long"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:simpleType name="Handy">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:enumeration value="one-handed"/>
+            <xsd:enumeration value="two-handed"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="short">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+            <xsd:maxInclusive value="500"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="middle">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="500"/>
+            <xsd:maxInclusive value="1000"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="long">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1000"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

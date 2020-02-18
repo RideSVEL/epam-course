@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Input XML document. This XML is valid against input.xsd XML schema-->
+
+<guns:Guns xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:guns="http://nure.ua/vasilchenko/Practice7"
+           xsi:schemaLocation="http://nure.ua/vasilchenko/Practice7 input.xsd">
+
+    <!--1 or more repetitions:-->
+    <Gun>
+        <Model>АК74</Model>
+        <Handy>two-handed</Handy>
+        <Origin>USSR</Origin>
+        <TTC>
+            <Distance>
+                <short>400</short>
+            </Distance>
+            <SightingRange>200</SightingRange>
+            <Clip>true</Clip>
+            <Optics>true</Optics>
+        </TTC>
+        <Material>metal</Material>
+    </Gun>
+
+    <Gun>
+        <Model>Glock 17</Model>
+        <Handy>one-handed</Handy>
+        <Origin>Osterreich</Origin>
+        <TTC>
+            <Distance>
+                <short>100</short>
+            </Distance>
+            <SightingRange>50</SightingRange>
+            <Clip>true</Clip>
+            <Optics>false</Optics>
+        </TTC>
+        <Material>metal</Material>
+    </Gun>
+
+    <Gun>
+        <Model>SVD</Model>
+        <Handy>two-handed</Handy>
+        <Origin>USSR</Origin>
+        <TTC>
+            <Distance>
+                <long>1200</long>
+            </Distance>
+            <SightingRange>800</SightingRange>
+            <Clip>true</Clip>
+            <Optics>true</Optics>
+        </TTC>
+        <Material>metal</Material>
+    </Gun>
+
+</guns:Guns>
