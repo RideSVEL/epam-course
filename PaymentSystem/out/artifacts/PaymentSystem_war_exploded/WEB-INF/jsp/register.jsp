@@ -1,0 +1,80 @@
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<html>
+
+<head>
+    <title><fmt:message key="jsp.register"/></title>
+    <%@ include file="/WEB-INF/jspf/head.jspf" %>
+</head>
+<body>
+
+<%--===========================================================================
+Here we use a table layout.
+Class page corresponds to the '.page' element in included CSS document.
+===========================================================================--%>
+<table id="main-container">
+
+    <%--===========================================================================
+    This is the HEADER, containing a top menu.
+    header.jspf contains all necessary functionality for it.
+    Just included it in this JSP document.
+    ===========================================================================--%>
+
+    <%-- HEADER --%>
+    <%@ include file="/WEB-INF/jspf/header.jspf" %>
+    <%-- HEADER --%>
+
+    <%--===========================================================================
+    This is the CONTENT, containing the main part of the page.
+    ===========================================================================--%>
+    <tr>
+        <td class="content center">
+            <%-- CONTENT --%>
+
+            <%--===========================================================================
+            Defines the web form.
+            ===========================================================================--%>
+            <form id="register_form" action="controller" method="post">
+
+                <%--===========================================================================
+                Hidden field. In the query it will act as command=login.
+                The purpose of this to define the command name, which have to be executed
+                after you submit current form.
+                ===========================================================================--%>
+                <input type="hidden" name="command" value="register"/>
+
+                <fieldset>
+                    <legend><fmt:message key="jsp.login"/></legend>
+                    <input name="login"/><br/>
+                </fieldset>
+                <br/>
+                <fieldset>
+                    <legend><fmt:message key="jsp.password"/></legend>
+                    <input type="password" name="password"/>
+                </fieldset>
+                <br/>
+                <fieldset>
+                    <legend><fmt:message key="jsp.Name"/></legend>
+                    <input name="first_name"/><br/>
+                </fieldset>
+                <br/>
+                <fieldset>
+                    <legend><fmt:message key="jsp.lastName"/></legend>
+                    <input name="last_name"/><br/>
+                </fieldset>
+                <br/>
+
+                <input type="submit" value="<fmt:message key="jsp.register"/>">
+            </form>
+
+            <%-- CONTENT --%>
+
+        </td>
+    </tr>
+
+    <%@ include file="/WEB-INF/jspf/footer.jspf" %>
+
+</table>
+</body>
+</html>

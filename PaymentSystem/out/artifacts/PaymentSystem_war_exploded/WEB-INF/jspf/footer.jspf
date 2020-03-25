@@ -1,0 +1,7 @@
+<%--=========================================================================== 
+Footer (bottom area). 
+===========================================================================--%>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+<tr>
+	<td id="footer">&copy;<fmt:message key="jsp.footer.payment_system"/> (<fmt:message key="jsp.footer.final_project"/>, <fmt:message key="jsp.footer.author"/>), 2020</td>
+</tr>

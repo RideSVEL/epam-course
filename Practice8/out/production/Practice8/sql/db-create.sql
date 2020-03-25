@@ -1,0 +1,31 @@
+#  DROP DATABASE practice8;
+#  CREATE DATABASE practice8;
+#  USE practice8;
+
+DROP TABLE IF EXISTS practice8.users_teams;
+DROP TABLE IF EXISTS practice8.users;
+DROP TABLE IF EXISTS practice8.teams;
+
+
+
+CREATE TABLE practice8.users(
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT KEY,
+  login VARCHAR(32) UNIQUE NOT NULL
+) ENGINE=InnoDB;
+CREATE TABLE practice8.teams(
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT KEY,
+  name VARCHAR(32) UNIQUE NOT NULL
+) ENGINE=InnoDB;
+CREATE TABLE practice8.users_teams(
+  user_id INT UNSIGNED NOT NULL,
+  team_id INT UNSIGNED NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  FOREIGN KEY (team_id) REFERENCES teams(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+INSERT INTO users VALUES (DEFAULT , 'ivanov');
+INSERT INTO teams VALUES (DEFAULT , 'teamA');
