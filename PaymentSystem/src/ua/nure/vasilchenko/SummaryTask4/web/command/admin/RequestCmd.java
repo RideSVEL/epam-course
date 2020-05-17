@@ -13,6 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Gets from the page header.jspf.
+ * Showing all BLOCKED users cards and with
+ * status request = TRUE.
+ *
+ * @author S. Vasilchenko
+ */
 public class RequestCmd extends Command {
 
     private static final long serialVersionUID = 7732235467234L;
@@ -23,14 +30,17 @@ public class RequestCmd extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         LOG.debug("Command starts");
         // get user cards list
-        List<Card> cards = DBManager.getInstance().getCardsWithRequest();
+        DBManager manager = DBManager.getInstance();
+        List<Card> cards = manager.getCardsWithRequest();
 
-        //  users.sort((o1, o2) -> (int) (o1.getId() - o2.getId()));
         LOG.trace("Found in DB: cardsList --> " + cards);
 
         request.setAttribute("cards", cards);
 
         LOG.trace("Set the request attribute: cards --> " + cards);
+
+        int count = manager.countRequestAdmin();
+        request.getSession().setAttribute("countAdmin", count);
 
         LOG.debug("Command finished");
         return Path.PAGE_REQUEST;

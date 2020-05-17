@@ -16,32 +16,19 @@
     <%@ include file="/WEB-INF/jspf/head.jspf" %>
 </head>
 <body>
-<table id="main-container">
-
-    <%@ include file="/WEB-INF/jspf/header.jspf" %>
-
-    <tr>
-        <td class="content">
-            <%-- CONTENT --%>
+<%@ include file="/WEB-INF/jspf/header.jspf" %>
+<div id="main-container" class="container-fluid login-page">
+    <form class="form-control shadow-lg" id="createCard" action="controller" method="post">
+        <input type="hidden" name="command" value="createCard"/>
+        <label for="name"><fmt:message key="jsp.name.newCard"/></label>
+        <div class="form-group">
             <br>
-            <form id="createCard" action="controller" method="post">
-                <input type="hidden" name="command" value="createCard"/>
-                <fieldset>
-                    <legend><fmt:message key="jsp.name.newCard"/></legend>
-                    <input name="name" type="text"/><br/>
-                </fieldset>
-                <br>
-                <input type="submit" value="<fmt:message key="jsp.accept"/>">
-            </form>
-            <br>
-
-
-            <%-- CONTENT --%>
-        </td>
-    </tr>
-
-    <%@ include file="/WEB-INF/jspf/footer.jspf" %>
-
-</table>
+            <input class="form-control shadow-lg" id="name" name="name" type="text" placeholder="<fmt:message key="jsp.Name"/>" required
+                   pattern="[\w&#1072;-&#1103;&#1040;-&#1071;]{2,15}"/>
+        </div>
+        <input class="btn btn-success shadow-lg" type="submit" value="<fmt:message key="jsp.accept"/>">
+    </form>
+</div>
+<%@ include file="/WEB-INF/jspf/scripts.jspf" %>
 </body>
 </html>

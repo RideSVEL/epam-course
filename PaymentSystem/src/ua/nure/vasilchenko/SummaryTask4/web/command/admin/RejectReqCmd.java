@@ -13,6 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Showing on page all list users in system.
+ *
+ * @author S. Vasilchenko
+ */
 public class RejectReqCmd extends Command {
 
     private static final long serialVersionUID = 77287894555558505L;
@@ -25,12 +30,16 @@ public class RejectReqCmd extends Command {
         DBManager manager = DBManager.getInstance();
         String id = request.getParameter("card_id");
         Card card = manager.findCard(Integer.parseInt(id));
+        LOG.trace("Found in DB: card --> " + card);
         card.setRequestId(0);
         try {
             manager.updateCard(card);
+            LOG.trace("update in DB: card --> " + card);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        int count = manager.countRequestAdmin();
+        request.getSession().setAttribute("countAdmin", count);
         LOG.debug("Command finished");
         return Path.COMMAND_REQUEST;
     }

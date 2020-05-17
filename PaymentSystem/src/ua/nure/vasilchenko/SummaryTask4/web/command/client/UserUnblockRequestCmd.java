@@ -13,6 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Command for sending for admin request
+ * to unblocking certain card.
+ *
+ * @author S. Vasilchenko
+ */
 public class UserUnblockRequestCmd extends Command {
 
     private static final long serialVersionUID = 77212365478505L;
@@ -24,9 +30,12 @@ public class UserUnblockRequestCmd extends Command {
         LOG.debug("Command starts");
         DBManager manager = DBManager.getInstance();
         String id = request.getParameter("card_id");
+        LOG.trace("Get parameter card_id from request" + id);
+        LOG.debug("Parsing card_id to int");
         Card card = manager.findCard(Integer.parseInt(id));
         card.setRequestId(1);
         try {
+            LOG.trace("Updting card in db" + card);
             manager.updateCard(card);
         } catch (SQLException e) {
             e.printStackTrace();

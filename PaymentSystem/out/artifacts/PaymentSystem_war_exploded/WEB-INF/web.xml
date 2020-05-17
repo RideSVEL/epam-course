@@ -37,6 +37,15 @@
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SettingsJsp</servlet-name>
+        <jsp-file>/WEB-INF/jsp/settings.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SettingsJsp</servlet-name>
+        <url-pattern>/settings</url-pattern>
+    </servlet-mapping>
 
     <!--============================================================
         Controller
@@ -87,7 +96,7 @@
             <param-name>admin</param-name>
             <param-value>listUsers showCards blockUser unblockUser
                 blockCard unblockCard showRequests acceptRequest
-                rejectRequest searchUser</param-value>
+                rejectRequest searchUser createSelectionPayment</param-value>
         </init-param>
         <init-param>
             <param-name>client</param-name>
@@ -95,15 +104,15 @@
                 confirmBalance checkPayment blockUserCard sendPayment
                 actionBlock requestUserCardUnblock showClientRequest
                 showPayments showIncome replenishBalance addBalance
-                confirmBalance commandCard createCard deleteDefer</param-value>
+                confirmBalance commandCard createCard deleteDefer getPdf</param-value>
         </init-param>
         <init-param>
             <param-name>common</param-name>
-            <param-value>logout noCommand viewSettings updateSettings</param-value>
+            <param-value>logout noCommand</param-value>
         </init-param>
         <init-param>
             <param-name>out-of-control</param-name>
-            <param-value>login register logout</param-value>
+            <param-value>login register logout viewSettings updateSettings</param-value>
         </init-param>
 
     </filter>

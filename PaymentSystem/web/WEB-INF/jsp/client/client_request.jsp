@@ -16,47 +16,42 @@
     <%@ include file="/WEB-INF/jspf/head.jspf" %>
 </head>
 <body>
-<table id="main-container">
-
-    <%@ include file="/WEB-INF/jspf/header.jspf" %>
-
-    <tr>
-        <td class="content">
-            <%-- CONTENT --%>
-            <br>
-            <table id="cards_table">
-                <thead>
+<%@ include file="/WEB-INF/jspf/header.jspf" %>
+<br>
+<div id="main-container" class="container">
+    <div class="table-responsive">
+        <table id="cards_table" class="table table-dark table-striped table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"><fmt:message key="jsp.Name"/></th>
+                <th scope="col"><fmt:message key="jsp.number"/></th>
+                <th scope="col"><fmt:message key="jsp.money"/></th>
+                <th scope="col"><fmt:message key="jsp.activity"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:set var="k" value="0"/>
+            <c:forEach var="card" items="${cards}">
+                <c:set var="k" value="${k+1}"/>
                 <tr>
-                    <td>#</td>
-                    <td><fmt:message key="jsp.Name"/></td>
-                    <td><fmt:message key="jsp.number"/></td>
-                    <td><fmt:message key="jsp.money"/></td>
-                    <td><fmt:message key="jsp.activity"/></td>
+                    <th scope="row"><c:out value="${k}"/></th>
+                    <td>${card.name}</td>
+                    <td>${card.number}</td>
+                    <td>${card.money}</td>
+                    <td>
+                        <c:if test="${card.activityId == 0}">
+                            <fmt:message key="jsp.activity.active"/>
+                        </c:if>
+                        <c:if test="${card.activityId == 1}">
+                            <fmt:message key="jsp.activity.blocked"/>
+                        </c:if>
                 </tr>
-                </thead>
-
-                <c:set var="k" value="0"/>
-                <c:forEach var="card" items="${cards}">
-                    <c:set var="k" value="${k+1}"/>
-                    <tr>
-                        <td><c:out value="${k}"/></td>
-                        <td>${card.name}</td>
-                        <td>${card.number}</td>
-                        <td>${card.money}</td>
-                        <td>
-                            <c:if test="${card.activityId == 0}"><fmt:message key="jsp.activity.active"/></c:if>
-                            <c:if test="${card.activityId == 1}"><fmt:message key="jsp.activity.blocked"/></c:if>
-                    </tr>
-                </c:forEach>
-            </table>
-
-
-            <%-- CONTENT --%>
-        </td>
-    </tr>
-
-    <%@ include file="/WEB-INF/jspf/footer.jspf" %>
-
-</table>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</div>
+<%@ include file="/WEB-INF/jspf/scripts.jspf" %>
 </body>
 </html>

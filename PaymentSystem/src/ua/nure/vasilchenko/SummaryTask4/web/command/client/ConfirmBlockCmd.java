@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Command confirm block card user.
+ *
+ * @author S. Vasilchenko
+ */
 public class ConfirmBlockCmd extends Command {
 
     private static final long serialVersionUID = 7723435677478505L;
@@ -22,8 +27,10 @@ public class ConfirmBlockCmd extends Command {
         LOG.debug("Command starts");
 
         String id = request.getParameter("card_id");
-        HttpSession session = request.getSession();
-        session.setAttribute("card_id", id);
+        LOG.trace("get parameter card_id" + id);
+
+        request.setAttribute("card_id", id);
+        LOG.trace("set attribute card_block" + id);
 
         LOG.debug("Command finished");
         return Path.PAGE_USER_BLOCK_ACTION;

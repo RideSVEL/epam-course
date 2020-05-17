@@ -16,68 +16,72 @@
     <%@ include file="/WEB-INF/jspf/head.jspf" %>
 </head>
 <body>
-<table id="main-container">
-
-    <%@ include file="/WEB-INF/jspf/header.jspf" %>
-
-    <tr>
-        <td class="content">
-            <%-- CONTENT --%>
-            <br>
-            <form id="sorting_payments" action="controller" method="post">
-                <input type="hidden" name="command" value="showIncome"/>
-                <select name="sorting">
-                    <option value="date"><fmt:message key="jsp.sorting.date"/></option>
-                    <option value="number"><fmt:message key="jsp.number"/></option>
-                </select>
-                <select name="order">
-                    <option value="ascending"><fmt:message key="jsp.sorting.ascending"/></option>
-                    <option value="descending"><fmt:message key="jsp.sorting.descending"/></option>
-                </select>
-                <select name="filter">
-                    <option value="all"><fmt:message key="jsp.sorting.all"/></option>
-                    <option value="send"><fmt:message key="jsp.sorting.send"/></option>
-                    <option value="prepared"><fmt:message key="jsp.sorting.prepared"/></option>
-                </select>
-                <input type="submit" value="<fmt:message key="jsp.sort"/>">
-            </form>
-            <br>
-            <table id="payment_table">
-                <thead>
+<c:set var="activeIncome" value="active" scope="page" />
+<%@ include file="/WEB-INF/jspf/header.jspf" %>
+<br>
+<div id="main-container" class="container-fluid p5percent">
+    <c:if test="${sorting == 'date'}">
+        <c:set var="selectedDate" value="selected" scope="page"/>
+    </c:if>
+    <c:if test="${sorting == 'number'}">
+        <c:set var="selectedNumber" value="selected" scope="page"/>
+    </c:if>
+    <c:if test="${order == 'ascending'}">
+        <c:set var="selectedAscending" value="selected" scope="page"/>
+    </c:if>
+    <c:if test="${order == 'descending'}">
+        <c:set var="selectedDescending" value="selected" scope="page"/>
+    </c:if>
+    <form id="sorting_payments" action="controller" method="post">
+        <input type="hidden" name="command" value="showIncome"/>
+        <label>
+            <select name="sorting" class="form-control bg-transparent shadow-lg text-white">
+                <option class="bg-dark" ${selectedDate} value="date"><fmt:message key="jsp.sorting.date"/></option>
+                <option class="bg-dark" ${selectedNumber} value="number"><fmt:message key="jsp.number"/></option>
+            </select>
+        </label>
+        <label>
+            <select name="order" class="form-control bg-transparent shadow-lg text-white">
+                <option class="bg-dark" ${selectedAscending} value="ascending"><fmt:message key="jsp.sorting.ascending"/></option>
+                <option class="bg-dark" ${selectedDescending} value="descending"><fmt:message key="jsp.sorting.descending"/></option>
+            </select>
+        </label>
+        <input type="hidden" name="filter" value="all">
+        <input class="btn btn-info shadow-lg" type="submit" value="<fmt:message key="jsp.sort"/>">
+    </form>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-dark">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"><fmt:message key="jsp.card.number"/></th>
+                <th scope="col"><fmt:message key="jsp.sender"/></th>
+                <th scope="col"><fmt:message key="jsp.number.payments"/></th>
+                <th scope="col"><fmt:message key="jsp.date"/></th>
+                <th scope="col"><fmt:message key="jsp.money"/> UAN</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:set var="k" value="0"/>
+            <c:forEach var="payment" items="${payments}">
+                <c:set var="k" value="${k+1}"/>
                 <tr>
-                    <td>#</td>
-                    <td><fmt:message key="jsp.card.number"/></td>
-                    <td><fmt:message key="jsp.sender"/></td>
-                    <td><fmt:message key="jsp.number.payments"/></td>
-                    <td><fmt:message key="jsp.date"/></td>
-                    <td><fmt:message key="jsp.money"/></td>
+                    <th scope="row"><c:out value="${k}"/></th>
+                    <td>${payment.cardDestinationNumber}</td>
+                    <td><c:if test="${payment.cardId != null && payment.cardId != 0}">
+                        ${payment.cardNumber}</c:if>
+                        <c:if test="${payment.cardId == null || payment.cardId == 0}"><fmt:message
+                                key="jsp.refill"/></c:if>
+                    </td>
+                    <td>${payment.id}</td>
+                    <td>${payment.date}</td>
+                    <td>${payment.money}</td>
                 </tr>
-                </thead>
-
-                <c:set var="k" value="0"/>
-                <c:forEach var="payment" items="${payments}">
-                    <c:set var="k" value="${k+1}"/>
-                    <tr>
-                        <td><c:out value="${k}"/></td>
-                        <td>${payment.cardDestinationNumber}</td>
-                        <td><c:if test="${payment.cardId != null && payment.cardId != 0}">
-                            ${payment.cardNumber}</c:if>
-                            <c:if test="${payment.cardId == null || payment.cardId == 0}"><fmt:message key="jsp.refill"/></c:if>
-                        </td>
-                        <td>${payment.id}</td>
-                        <td>${payment.date}</td>
-                        <td>${payment.money}</td>
-                    </tr>
-                </c:forEach>
-            </table>
-
-
-            <%-- CONTENT --%>
-        </td>
-    </tr>
-
-    <%@ include file="/WEB-INF/jspf/footer.jspf" %>
-
-</table>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</div>
+<%@ include file="/WEB-INF/jspf/scripts.jspf" %>
 </body>
 </html>

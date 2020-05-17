@@ -9,22 +9,21 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Holder for all commands.<br/>
+ * Holder for all commands.
  *
- * @author D.Kolesnikov
+ * @author S.Vasilchenko
  */
 public class CommandContainer {
 
     private static final Logger LOG = Logger.getLogger(CommandContainer.class);
 
-    private static Map<String, Command> commands = new TreeMap<String, Command>();
+    private static Map<String, Command> commands = new TreeMap<>();
 
     static {
         // common commands
         commands.put("login", new LoginCommand());
         commands.put("register", new RegisterCmd());
         commands.put("logout", new LogoutCommand());
-        commands.put("viewSettings", new ViewSettingsCommand());
         commands.put("noCommand", new NoCommand());
         commands.put("updateSettings", new UpdateSettingsCmd());
 
@@ -45,7 +44,8 @@ public class CommandContainer {
         commands.put("confirmDefer", new ConfirmDeferCmd());
         commands.put("createCard", new CreateCardCmd());
         commands.put("commandCard", new CardCmd());
-		commands.put("deleteDefer", new DeleteDeferPaymentCmd());
+        commands.put("deleteDefer", new DeleteDeferPaymentCmd());
+        commands.put("getPdf", new GetPDFCmd());
 
         // admin commands
         commands.put("listUsers", new ListUsersCmd());
@@ -58,6 +58,7 @@ public class CommandContainer {
         commands.put("acceptRequest", new AcceptReqCmd());
         commands.put("rejectRequest", new RejectReqCmd());
         commands.put("searchUser", new SearchUserCmd());
+        commands.put("createSelectionPayment", new CreateSelectionPayment());
 
         LOG.debug("Command container was successfully initialized");
         LOG.trace("Number of commands --> " + commands.size());

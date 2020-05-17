@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Command prepared cards for choosing to replenish balance.
+ *
+ * @author S. Vasilchenko
+ */
 public class ReplenishBalanceCmd extends Command {
 
     private static final long serialVersionUID = 77795462334L;
@@ -24,6 +29,7 @@ public class ReplenishBalanceCmd extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         LOG.debug("Command starts");
         User user = (User) request.getSession().getAttribute("user");
+        LOG.trace("get attribute from session" + user);
         DBManager manager = DBManager.getInstance();
         // get user cards list
         List<Card> cards = manager.getUserCards(user);

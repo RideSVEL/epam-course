@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Command deleting defer payment.
+ *
+ * @author S. Vasilchenko
+ */
 public class DeleteDeferPaymentCmd extends Command {
 
     private static final long serialVersionUID = 77795462334L;
@@ -22,8 +27,10 @@ public class DeleteDeferPaymentCmd extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         LOG.debug("Command starts");
         String paymentId = request.getParameter("payment_id");
+        LOG.trace("found in request: paymentId --> " + paymentId);
         DBManager manager = DBManager.getInstance();
         try {
+            LOG.trace("delete from db: by paymentId --> " + paymentId);
             manager.deletePayment(Long.parseLong(paymentId));
         } catch (SQLException e) {
             e.printStackTrace();

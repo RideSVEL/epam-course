@@ -17,16 +17,29 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Command showing payments with parameters sorting.
+ *
+ * @author S. Vasilchenko
+ */
 public class ShowIncomeCmd extends Command {
 
     private static final long serialVersionUID = 7778451270234L;
 
     private static final Logger LOG = Logger.getLogger(ShowIncomeCmd.class);
 
+    /**
+     * Return list payments, only with choosing filter.
+     *
+     * @param payments - list all payments for filtering.
+     * @param filter - for choosing filter.
+     * @return - list payments, only with choosing filter.
+     */
     private List<Payment> filterPayments(List<Payment> payments, String filter) {
         List<Payment> result = new ArrayList<>();
         switch (filter) {
             case "all":
+                LOG.trace("getting all payments" + payments);
                 return payments;
             case "send":
                 for (Payment payment : payments) {
@@ -34,6 +47,7 @@ public class ShowIncomeCmd extends Command {
                         result.add(payment);
                     }
                 }
+                LOG.trace("getting send payments" + result);
                 return result;
             case "prepared":
                 for (Payment payment : payments) {
@@ -41,24 +55,34 @@ public class ShowIncomeCmd extends Command {
                         result.add(payment);
                     }
                 }
+                LOG.trace("getting prepared payments" + result);
                 return result;
         }
         return payments;
     }
 
-
+    /**
+     * Return list payments, sorted by special parameters.
+     *
+     * @param payments list all Cards for sorting.
+     * @param sorting - type sorting.
+     * @param order - destination sorting.
+     * @return - sorted list cards by type and destination.
+     */
     private List<Payment> sortingPayments(List<Payment> payments, String sorting, String order) {
         switch (sorting) {
             case "date":
                 if ("descending".equals(order)) {
                     Collections.reverse(payments);
                 }
+                LOG.trace("sorting by date" + payments);
                 break;
             case "number":
                 payments.sort(Comparator.comparingLong(Payment::getId));
                 if ("descending".equals(order)) {
                     Collections.reverse(payments);
                 }
+                LOG.trace("sorting by number" + payments);
                 break;
         }
         return payments;
@@ -68,6 +92,7 @@ public class ShowIncomeCmd extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         LOG.debug("Command starts");
         User user = (User) request.getSession().getAttribute("user");
+        LOG.trace("get attribute from session" + user);
         DBManager manager = DBManager.getInstance();
         List<Payment> payments = manager.getUserIncome(user);
         for (Payment payment : payments) {
@@ -76,6 +101,7 @@ public class ShowIncomeCmd extends Command {
             }
             payment.setCardDestinationNumber(manager.findCard(payment.getCardDestinationId()).getNumber());
         }
+        LOG.trace("setting cards numbers into payments " + payments);
         String sorting = request.getParameter("sorting");
         String order = request.getParameter("order");
         String filter = request.getParameter("filter");
@@ -86,7 +112,7 @@ public class ShowIncomeCmd extends Command {
             filter = (String) request.getSession().getAttribute("filter");
             if (sorting == null || order == null || filter == null
                     || sorting.isEmpty() || order.isEmpty() || filter.isEmpty()) {
-
+                LOG.trace("fields was empty ");
             } else {
                 payments = sortingPayments(filterPayments(payments, filter), sorting, order);
             }
@@ -95,6 +121,7 @@ public class ShowIncomeCmd extends Command {
             request.getSession().setAttribute("order", order);
             request.getSession().setAttribute("filter", filter);
             payments = sortingPayments(filterPayments(payments, filter), sorting, order);
+            LOG.trace("sorting payments" + payments);
         }
         request.setAttribute("payments", payments);
         LOG.trace("Set the request attribute: payments --> " + payments);

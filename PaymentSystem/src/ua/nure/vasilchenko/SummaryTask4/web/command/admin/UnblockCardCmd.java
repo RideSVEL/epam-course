@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
+/**
+ * Updating in DB status card on 'ACTIVE'.
+ *
+ * @author S. Vasilchenko
+ */
 public class UnblockCardCmd extends Command {
 
     private static final long serialVersionUID = 7728888877478505L;
@@ -23,9 +28,11 @@ public class UnblockCardCmd extends Command {
         DBManager manager = DBManager.getInstance();
         String id = request.getParameter("card_id");
         Card card = manager.findCard(Integer.parseInt(id));
+        LOG.trace("Found in DB: card --> " + card);
         card.setActivityId(0);
         try {
             manager.updateCard(card);
+            LOG.trace("update in DB: card --> " + card);
         } catch (SQLException e) {
             e.printStackTrace();
         }
